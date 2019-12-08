@@ -5,12 +5,24 @@ namespace LinkedListDemo
 {
     class Program
     {
-        private static LinkedList list => LinkedListInstance.GetInstance;
+        //private static SinglyLinkedList list => LinkedListInstance.GetInstance;
+
+        private static ILinkedList list { get; set; }
 
         static void Main(string[] args)
         {
             try
             {
+                string linkedListType = string.Empty;
+
+                WriteLine("Choose Linked List Type");
+                PrintLinkedListType();
+                linkedListType = ReadLine();
+
+                int optionNumber = CheckLinkedListType(linkedListType);
+
+                InitializeLinkedList(optionNumber);
+
                 //Either "Y" Or "N"
                 string userChoice, option = string.Empty;
 
@@ -33,11 +45,25 @@ namespace LinkedListDemo
             }
         }
 
+        private static void InitializeLinkedList(int listType)
+        {
+            ILinkedList instance = LinkedListFactory.GetLinkedListInstance((LinkedListTypeEnum)listType);
+
+            if (instance == null)
+                throw new Exception("Failed to initialize list");
+
+            SetLinkedListInstance(instance);
+            WriteLine("Initialized successfully");
+        }
+
+        private static void SetLinkedListInstance(ILinkedList instance)
+            => list = instance;
+
         private static void PerformAction(string option)
         {
             (bool success, int optionNumber) = CheckOption(option);
             if (!success)
-                return;
+                throw new Exception("Invalid option number"); //Generally custom exceptions
 
             PerformActionOnSuccess(optionNumber);
         }
@@ -69,22 +95,43 @@ namespace LinkedListDemo
                     list.AddNodeAfterSpecificElement(data, afterElement);
                     break;
 
-                case 4:                    
-                    list.DeleteFirstNode();
-                    break;
-
-                case 5:
-                    list.DeleteLastNode();
-                    break;
-
-                case 6:
-                    WriteLine("Enter Data To Delete");
-                    data = ReadLine();
-                    list.DeleteSpecificNode(data);
-                    break;
-                case 7:
+                case 4:
                     list.PrintList();
                     break;
+
+                //case 5:                    
+                //    list.DeleteFirstNode();
+                //    break;
+
+                //case 6:
+                //    list.DeleteLastNode();
+                //    break;
+
+                //case 7:
+                //    WriteLine("Enter Data To Delete");
+                //    data = ReadLine();
+                //    list.DeleteSpecificNode(data);
+                //    break;
+                
+                //case 8:
+                //    list.ReverseList();
+                //    break;
+
+                //case 9:
+                //    list.PrintListInReverse();
+                //    break;
+
+                //case 10:
+                //    list.CopyLinkedList();
+                //    break;
+
+                //case 11:
+                //    list.PrintCopiedList();
+                //    break;
+
+                //case 12:
+                //    list.DetectAndRemoveLoop();
+                //    break;
 
                 default:
                     WriteLine("Error Occured While Performing The Operation");
@@ -92,18 +139,33 @@ namespace LinkedListDemo
             }
         }
 
+        private static int CheckLinkedListType(string choice)
+        {
+            bool success = int.TryParse(choice, out int optionNumber);
+
+            if (!success || (optionNumber > 2 || optionNumber < 1))
+                throw new Exception("Invalid Linked List Type");
+
+            return optionNumber;
+        }
+
         private static (bool, int) CheckOption(string option)
         {
             //int optionNumber = default(int);
             bool success = int.TryParse(option, out int optionNumber);
 
-            if (!success || (optionNumber > 7 || optionNumber < 1))
+            if (!success || (optionNumber > 4 || optionNumber < 1))
             {
-                WriteLine("Enter Valid Choice");
                 return (false, default(int));
             }
 
             return (success, optionNumber);
+        }
+
+        private static void PrintLinkedListType()
+        {
+            WriteLine("1 - Singly Linked List");
+            WriteLine("2 - Doubly Linked List");
         }
 
         private static void PrintOptions()
@@ -111,40 +173,45 @@ namespace LinkedListDemo
             WriteLine("1 - Add Item At First");
             WriteLine("2 - Add Item At Last");
             WriteLine("3 - Add Item After Specific Position");
-            WriteLine("4 - Delete First Item");
-            WriteLine("5 - Delete Last Item");
-            WriteLine("6 - Delete Specific Item");
-            WriteLine("7 - Print List");
+            WriteLine("4 - Print List");
+            //WriteLine("5 - Delete First Item");
+            //WriteLine("6 - Delete Last Item");
+            //WriteLine("7 - Delete Specific Item");           
+            //WriteLine("8 - Reverse List");
+            //WriteLine("9 - Print List In Reverse");
+            //WriteLine("10 - Copy Linked List");
+            //WriteLine("11 - Print Copied List");
+            //WriteLine("12 - Detect And Remove Loop");
         }
     }
 
-    public sealed class LinkedListInstance
-    {
-        private static LinkedList _instance = null;
+    //public sealed class LinkedListInstance
+    //{
+    //    private static SinglyLinkedList _instance = null;
 
-        private  static object syncLock = new object();
+    //    private  static object syncLock = new object();
 
-        //Prevent Instantiation from outside
-        private LinkedListInstance()
-        { }
+    //    //Prevent Instantiation from outside
+    //    private LinkedListInstance()
+    //    { }
 
-        //ThreadSafe
-        public static LinkedList GetInstance
-        {
-            get
-            {
-                if(_instance == null)
-                {
-                    lock (syncLock)
-                    {
-                        if(_instance == null)
-                        {
-                            _instance = new LinkedList();
-                        }
-                    }
-                }
-                return _instance;
-            }
-        }
-    }
+    //    //ThreadSafe
+    //    public static SinglyLinkedList GetInstance
+    //    {
+    //        get
+    //        {
+    //            if(_instance == null)
+    //            {
+    //                lock (syncLock)
+    //                {
+    //                    if(_instance == null)
+    //                    {
+    //                        _instance = new SinglyLinkedList();
+    //                    }
+    //                }
+    //            }
+    //            return _instance;
+    //        }
+    //    }
+    //}
 }
