@@ -147,7 +147,7 @@ namespace LinkedListDemo
         /// <summary>
         /// Delete first node from linked list
         /// </summary>
-        public void DeleteFirstNode()
+        public void DeleteFirstNode(string message = null)
         {
             if (IsEmptyList())
             {
@@ -161,7 +161,7 @@ namespace LinkedListDemo
         /// <summary>
         /// Delete last node from linked list
         /// </summary>
-        public void DeleteLastNode()
+        public void DeleteLastNode(string message = null)
         {
             if (IsEmptyList())
             {
@@ -315,8 +315,6 @@ namespace LinkedListDemo
             Console.WriteLine("No Loop Detected");
         }      
         
-        
-
         #region PrivateMethods
         private bool HasOnlyOneNode()
         {

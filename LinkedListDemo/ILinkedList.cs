@@ -28,5 +28,21 @@
         /// <param name="data"></param>
         /// <param name="insertAfterElement"></param>
         void AddNodeAfterSpecificElement(object data, object insertAfterElement);
+
+        /// <summary>
+        /// Delete first node from linked list
+        /// </summary>
+        void DeleteFirstNode(string message = null);
+
+        /// <summary>
+        /// Delete last node from linked list
+        /// </summary>
+        void DeleteLastNode(string message = null);
+
+        /// <summary>
+        /// Delete specific element from linked list
+        /// </summary>
+        /// <param name="dataToDelete"></param>
+        void DeleteSpecificNode(object dataToDelete);
     }
 }

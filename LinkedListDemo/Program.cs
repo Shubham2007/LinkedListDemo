@@ -99,20 +99,20 @@ namespace LinkedListDemo
                     list.PrintList();
                     break;
 
-                //case 5:                    
-                //    list.DeleteFirstNode();
-                //    break;
+                case 5:
+                    list.DeleteFirstNode();
+                    break;
 
-                //case 6:
-                //    list.DeleteLastNode();
-                //    break;
+                case 6:
+                    list.DeleteLastNode();
+                    break;
 
-                //case 7:
-                //    WriteLine("Enter Data To Delete");
-                //    data = ReadLine();
-                //    list.DeleteSpecificNode(data);
-                //    break;
-                
+                case 7:
+                    WriteLine("Enter Data To Delete");
+                    data = ReadLine();
+                    list.DeleteSpecificNode(data);
+                    break;
+
                 //case 8:
                 //    list.ReverseList();
                 //    break;
@@ -154,7 +154,7 @@ namespace LinkedListDemo
             //int optionNumber = default(int);
             bool success = int.TryParse(option, out int optionNumber);
 
-            if (!success || (optionNumber > 4 || optionNumber < 1))
+            if (!success || (optionNumber > 7 || optionNumber < 1))
             {
                 return (false, default(int));
             }
@@ -174,9 +174,9 @@ namespace LinkedListDemo
             WriteLine("2 - Add Item At Last");
             WriteLine("3 - Add Item After Specific Position");
             WriteLine("4 - Print List");
-            //WriteLine("5 - Delete First Item");
-            //WriteLine("6 - Delete Last Item");
-            //WriteLine("7 - Delete Specific Item");           
+            WriteLine("5 - Delete First Item");
+            WriteLine("6 - Delete Last Item");
+            WriteLine("7 - Delete Specific Item");
             //WriteLine("8 - Reverse List");
             //WriteLine("9 - Print List In Reverse");
             //WriteLine("10 - Copy Linked List");

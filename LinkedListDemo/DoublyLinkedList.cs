@@ -133,6 +133,111 @@ namespace LinkedListDemo
             curr.next = temp;
         }
 
+        /// <summary>
+        /// Delete first node from linked list
+        /// </summary>
+        public void DeleteFirstNode(string message = null)
+        {
+            if (IsEmptyList())
+            {
+                WriteLine("List is already empty");
+                return;
+            }
+
+            //If list is not empty
+            head = head.next;
+
+            if (head != null)
+                head.prev = null;
+
+            message = message ?? "First node deleted";
+            WriteLine(message);
+        }
+
+        /// <summary>
+        /// Delete last node from linked list
+        /// </summary>
+        public void DeleteLastNode(string message = null)
+        {
+            if (IsEmptyList())
+            {
+                WriteLine("List is already empty");
+                return;
+            }
+
+            if (HasOnlyOneNode())
+                head = null;
+
+            //If list is not empty and has more than 1 nodes
+            DoublyLinkedListNode temp = head;
+
+            while(temp.next.next != null)
+                temp = temp.next;
+
+            temp.next = null;
+            message = message ?? "Last node deleted";
+            WriteLine(message);
+        }
+
+        /// <summary>
+        /// Delete specific element from linked list
+        /// </summary>
+        /// <param name="dataToDelete"></param>
+        public void DeleteSpecificNode(object dataToDelete)
+        {
+            if (IsEmptyList())
+            {
+                WriteLine("List is already empty");
+                return;
+            }
+
+            string message = "Node delete with data : " + dataToDelete;
+
+            if (HasOnlyOneNode())
+            {
+                if (head.data.Equals(dataToDelete))
+                {
+                    DeleteFirstNode(message);
+                    return;
+                }
+                WriteLine("Data Not Found");
+                return;
+            }
+
+            //Id its a first node
+            if (head.data.Equals(dataToDelete))
+            {
+                DeleteFirstNode(message);
+                return;
+            }
+
+            //If list is not empty and has more than 1 nodes
+            DoublyLinkedListNode temp = head;
+
+            while (temp.next != null && !temp.next.data.Equals(dataToDelete))
+                temp = temp.next;
+
+            if(temp.next == null)
+            {
+                WriteLine("Data not found");
+                return;
+            }
+
+            //If its a last node
+            if (temp.next.next == null)
+            {
+                DeleteLastNode(message);
+                return;
+            }
+
+            //Delete node from middle
+            temp.next.next.prev = temp.next.prev;
+            temp.next = temp.next.next;
+
+            WriteLine("Node delete with data : " + dataToDelete);
+            return;
+        }
+
         #endregion
 
         #region PrivateMethods
@@ -161,8 +266,6 @@ namespace LinkedListDemo
             return head == null;
         }
 
-        
-        
         #endregion
     }
 }
